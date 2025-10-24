@@ -60,6 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Notification system
     function showNotification(message, type = 'info') {
+        const ANIMATION_DURATION = 300; // milliseconds
+        
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.textContent = message;
@@ -73,16 +75,18 @@ document.addEventListener('DOMContentLoaded', function() {
             border-radius: 0.5rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1000;
-            animation: slideIn 0.3s ease;
+            animation: slideIn ${ANIMATION_DURATION}ms ease;
         `;
         
         document.body.appendChild(notification);
         
         setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
+            notification.style.animation = `slideOut ${ANIMATION_DURATION}ms ease`;
             setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
+                if (notification && notification.parentNode) {
+                    notification.remove();
+                }
+            }, ANIMATION_DURATION);
         }, 3000);
     }
 
