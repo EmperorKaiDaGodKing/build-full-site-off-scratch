@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             // Get form values
-            const formData = new FormData(contactForm);
             const name = contactForm.querySelector('input[type="text"]').value;
             const email = contactForm.querySelector('input[type="email"]').value;
             const message = contactForm.querySelector('textarea').value;
@@ -49,18 +48,45 @@ document.addEventListener('DOMContentLoaded', function() {
             // Simple validation
             if (name && email && message) {
                 // Show success message
-                alert('Thank you for your message! We will get back to you soon.');
+                showNotification('Thank you for your message! We will get back to you soon.', 'success');
                 
                 // Reset form
                 contactForm.reset();
             } else {
-                alert('Please fill in all fields.');
+                showNotification('Please fill in all fields.', 'error');
             }
         });
     }
 
+    // Notification system
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background-color: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+            color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
     // Add scroll effect to header
-    let lastScroll = 0;
     const header = document.querySelector('header');
     
     window.addEventListener('scroll', function() {
@@ -71,8 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
         }
-        
-        lastScroll = currentScroll;
     });
 
     // Add animation on scroll for service cards
