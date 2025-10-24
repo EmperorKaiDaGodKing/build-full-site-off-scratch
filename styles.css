@@ -1,0 +1,14 @@
+/* Miami Heat gradient title */
+.heat-title {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(90deg, #98002E 0%, #F9A01B 100%); /* red -> gold */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #98002E; /* fallback for older browsers */
+  text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+  margin: 1rem;
+  display: inline-block;
+}
